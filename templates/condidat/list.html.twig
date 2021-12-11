@@ -1,0 +1,32 @@
+<h1>Liste des candidats</h1>
+<table border="1">
+    <tr>
+        <td>id</td>
+        <td>login</td>
+        <td>password</td>
+        <td>nom</td>
+        <td>prenom</td>
+        <td>cin</td>
+        <td>mail</td>
+        <td>numt</td>
+        <td>modifier</td>
+        <td>supprimer</td>
+    </tr>
+
+    {% for c in condidats %}
+        <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.login }}</td>
+            <td>{{ c.password }}</td>
+            <td>{{ c.nom }}</td>
+            <td>{{ c.prenom }}</td>
+            <td>{{ c.cin }}</td>
+            <td>{{ c.mail }}</td>
+            <td>{{ c.numt }}</td>
+            <td><a href="{{ path("updateCondidat",{'id':c.id}) }}">modifier</a></td>
+            <td><a href="{{ path("deleteCondidat",{'id':c.id}) }}">supprimer</a></td>
+        </tr>
+    {% endfor %}
+
+</table>
+<p><a href="{{ path("addCondidat") }}">ajouter un nouveau condidat</a></p>

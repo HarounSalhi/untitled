@@ -1,0 +1,23 @@
+<h1>Liste des examens passé par les condidats</h1>
+<table border="1">
+  <tr>
+    <td>id</td>
+    <td>titre</td>
+    <td>date</td>
+    <td>condidat</td>
+    <td></td>
+    <td></td>
+  </tr>
+
+  {% for e in examen %}
+  <tr>
+    <td>{{ e.id }}</td>
+    <td>{{ e.titre }}</td>
+    <td>{{ e.date|date('d/m/Y') }}</td>
+    <td>{{ e.condidatId }}</td>
+    <td><a href="{{ path("modifierPasserExamen",{'id':e.id}) }}">modifier</a></td>
+    <td><a href="{{ path("deleteExamen",{'id':e.id}) }}">supprimer</a></td>
+  </tr>
+  {% endfor %}
+</table>
+<a href="{{ path("addExamen") }}">ajouter une nouvelle ligne</a>

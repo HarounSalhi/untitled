@@ -1,0 +1,30 @@
+<h1>Liste des formations</h1>
+<table border="1">
+    <tr>
+        <td>id</td>
+        <td>nom formation</td>
+        <td>date debut</td>
+        <td>date fin</td>
+        <td>horaire</td>
+        <td>prix</td>
+        <td>avis</td>
+    </tr>
+
+    {% for f in formation %}
+    <tr>
+        <td>{{ f.id }}</td>
+        <td>{{ f.nomFormation }}</td>
+        <td>{{ f.dateDebut|date('d/m/Y') }}</td>
+        <td>{{ f.datefin|date('d/m/Y') }}</td>
+        <td>{{ f.horaire|date('H:i') }}</td>
+        <td>{{ f.prix }}</td>
+        <td>
+            <a href="{{ path("AddAvisformation",{'id':f.id,'note':1}) }}">1</a>
+            <a href="{{ path("AddAvisformation",{'id':f.id,'note':2}) }}">2</a>
+            <a href="{{ path("AddAvisformation",{'id':f.id,'note':3}) }}">3</a>
+            <a href="{{ path("AddAvisformation",{'id':f.id,'note':4}) }}">4</a>
+            <a href="{{ path("AddAvisformation",{'id':f.id,'note':5}) }}">5</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

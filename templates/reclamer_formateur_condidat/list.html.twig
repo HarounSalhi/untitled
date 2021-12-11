@@ -1,0 +1,27 @@
+<h1>Liste des formateurs</h1>
+<table border="1">
+  <tr>
+    <td>id</td>
+    <td>login</td>
+    <td>password</td>
+    <td>nom</td>
+    <td>prenom</td>
+    <td>cin</td>
+    <td>mail</td>
+    <td>numt</td>
+  </tr>
+
+  {% for f in formateur %}
+  <tr>
+    <td>{{ f.id }}</td>
+    <td>{{ f.login }}</td>
+    <td>{{ f.password }}</td>
+    <td>{{ f.nom }}</td>
+    <td>{{ f.prenom }}</td>
+    <td>{{ f.cin }}</td>
+    <td>{{ f.mail }}</td>
+    <td>{{ f.numt }}</td>
+    <td><a href="{{ path("reclamerFormateur",{'id':f.id}) }}">reclamer</a></td>
+  </tr>
+  {% endfor %}
+</table>

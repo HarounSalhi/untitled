@@ -41,7 +41,7 @@ class CandidatController extends AbstractController
             $condidat->setPassword(
                 $userPasswordHasher->hashPassword(
                     $condidat,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
 

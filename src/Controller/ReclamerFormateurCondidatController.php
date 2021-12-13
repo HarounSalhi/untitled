@@ -21,6 +21,18 @@ class ReclamerFormateurCondidatController extends AbstractController
         $this->requestStack = $requestStack;
     }
 
+    /**
+     * @Route("/ListReclamation", name="ListReclamation")
+     */
+    public function ListReclamation(): Response
+    {
+        $em=$this->getDoctrine()->getManager();
+        $reclamation=$em->getRepository("App\Entity\CondidatFormateur")->findAll();
+
+        return $this->render('reclamer_formateur_condidat\listreclamation.html.twig',[
+            "reclamation"=>$reclamation
+        ]);
+    }
 
     /**
      * @Route("/ListFormateur", name="ListFormateur")
@@ -66,10 +78,11 @@ class ReclamerFormateurCondidatController extends AbstractController
     }
 
 
+    /*
     /**
      * @Route("/UpdateReclamationFormateur/{id}", name="UpdateReclamationFormateur")
      */
-    public function UpdateReclamationFormateur(Request $request,$id): Response
+    /*public function UpdateReclamationFormateur(Request $request,$id): Response
     {
         $em=$this->getDoctrine()->getManager();
         $reclamer=$em->getRepository("App`\Entity\CondidatFormateur")->find($id);
@@ -91,7 +104,7 @@ class ReclamerFormateurCondidatController extends AbstractController
     /**
      * @Route("/deleteReclamationFormateur", name="deleteReclamationFormateur")
      */
-    public function deleteReclamationFormateur(Request $request,$id): Response
+    /*public function deleteReclamationFormateur(Request $request,$id): Response
     {
         $em=$this->getDoctrine()->getManager();
         $reclamer=$em->getRepository("App`\Entity\CondidatFormateur")->find($id);
@@ -105,6 +118,6 @@ class ReclamerFormateurCondidatController extends AbstractController
 
         return $this->redirectToRoute("ListReclamationFormateur");
     }
-
+*/
 
 }

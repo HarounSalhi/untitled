@@ -1,4 +1,4 @@
-<h1>Liste des formations</h1>
+<h1>Liste des avis des formations</h1>
 <table border="1">
     <tr>
         <td>id</td>
@@ -10,8 +10,8 @@
     {% for a in avis %}
         <tr>
             <td>{{ a.id }}</td>
-            <td>{{ a.Condidat_id }}</td>
-            <td>{{ a.formation_id }}</td>
+            <td>{{ a.CondidatId }}</td>
+            <td>{{ a.formationId }}</td>
             <td>{{ a.avis }}</td>
         </tr>
     {% endfor %}

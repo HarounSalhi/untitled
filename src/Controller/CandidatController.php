@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CandidatController extends AbstractController
@@ -29,7 +30,7 @@ class CandidatController extends AbstractController
     /**
      * @Route("/addCondidat", name="addCondidat",methods={"GET","POST"})
      */
-    public function addCondidat(Request $request): Response
+    public function addCondidat(Request $request,UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $condidat=new Condidat();
         $form = $this->createForm(AddCondidatForm::class,$condidat);
@@ -37,6 +38,13 @@ class CandidatController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() and $form->isValid()){
+            $condidat->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $condidat,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
             $em= $this->getDoctrine()->getManager();
             $em->persist($condidat);
             $em->flush();

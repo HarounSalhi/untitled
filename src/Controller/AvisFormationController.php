@@ -7,11 +7,18 @@ use App\Entity\Formation;
 use App\Form\AvisForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AvisFormationController extends AbstractController
 {
+    private $requestStack;
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
     /*
     /**
      * @Route("/avisFormation", name="avisFormation")
@@ -70,12 +77,12 @@ class AvisFormationController extends AbstractController
 
 
     /**
-     * @Route("/AddAvisformation/{id,note}", name="AddAvisformation")
+     * @Route("/AddAvisformation/{id}/{note}", name="AddAvisformation")
      */
-    public function AddAvisformation(Request $request,int $id,int $note): Response
+    public function AddAvisformation(Request $request,$id,$note): Response
     {
         $em=$this->getDoctrine()->getManager();
-        $formation=$em->getRepository("App`\Entity\Formation")->find($id);
+        $formation=$em->getRepository("App\Entity\Formation")->find($id);
 
         /*
         $editform=$this->createForm(AddCondidatForm::class,$condidat);
@@ -92,7 +99,8 @@ class AvisFormationController extends AbstractController
 
 
         $avis=new AvisFormation();
-        $avis->setCondidatId(1);
+        $session = $this->requestStack->getSession();
+        $avis->setCondidatId($session->get('Condidat_id'));
         $avis->setFormationId($id);
         $avis->setAvis($note);
 

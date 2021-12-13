@@ -9,9 +9,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ReclamerFormateurCondidatController extends AbstractController
 {
+
+    private $requestStack;
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
+
 
     /**
      * @Route("/ListFormateur", name="ListFormateur")
@@ -29,9 +38,9 @@ class ReclamerFormateurCondidatController extends AbstractController
 
 
     /**
-     * @Route("/reclamerFormateur/{$id}", name="reclamerFormateur")
+     * @Route("/reclamerFormateur/{id}", name="reclamerFormateur")
      */
-    public function reclamerFormateur(Request $request): Response
+    public function reclamerFormateur(Request $request,$id): Response
     {
         $reclamer=new CondidatFormateur();
         /*$form = $this->createForm(ReclamerFormateurForm::class,$reclamer);
@@ -46,13 +55,14 @@ class ReclamerFormateurCondidatController extends AbstractController
             return $this->redirectToRoute("reclamerFormateur");
         }
         */
-        $reclamer->setCondidatId(5);
-        $reclamer->setFormateurId($request->attributes->get('id'));
+        $session = $this->requestStack->getSession();
+        $reclamer->setCondidatId( $session->get('Condidat_id'));
+        $reclamer->setFormateurId($id);
 
         $em= $this->getDoctrine()->getManager();
         $em->persist($reclamer);
         $em->flush();
-        return $this->redirectToRoute("reclamerFormateur");
+        return $this->redirectToRoute("ListFormateur");
     }
 
 
